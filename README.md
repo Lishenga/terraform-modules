@@ -7,7 +7,7 @@ repository of useful terraform modules
 ## ECS Cluster (EC2)
 ```
 module "my-ecs" {
-  source         = "github.com/in4it/terraform-modules//modules/ecs-cluster"
+  source         = "github.com/Lishenga/terraform-modules/modules/ecs-cluster"
   vpc_id         = "vpc-id"
   cluster_name   = "my-ecs"
   instance_type  = "t2.small"
@@ -24,7 +24,7 @@ module "my-ecs" {
 ## ECS Cluster (Fargate)
 ```
 module "my-ecs" {
-  source         = "github.com/in4it/terraform-modules//modules/fargate-cluster"
+  source         = "github.com/Lishenga/terraform-modules/modules/fargate-cluster"
   cluster_name   = "my-ecs"
   log_group      = "my-log-group"
 }
@@ -33,7 +33,7 @@ module "my-ecs" {
 ## ECS Service
 ```
 module "my-service" {
-  source              = "github.com/in4it/terraform-modules//modules/ecs-service"
+  source              = "github.com/Lishenga/terraform-modules/modules/ecs-service"
   vpc_id              = "vpc-id"
   application_name    = "my-service"
   application_port    = "8080"
@@ -56,7 +56,7 @@ module "my-service" {
 ## ALB
 ```
 module "my-alb" {
-  source             = "github.com/in4it/terraform-modules/modules/alb"
+  source             = "github.com/Lishenga/terraform-modules/modules/alb"
   vpc_id             = "vpc-id"
   lb_name            = "my-alb"
   vpc_subnets        = "subnetId-1,subnetId-2"
@@ -70,7 +70,7 @@ module "my-alb" {
 ## ALB Rule
 ```
 module "my-alb-rule" {
-  source             = "github.com/in4it/terraform-modules/modules/alb-rule"
+  source             = "github.com/Lishenga/terraform-modules/modules/alb-rule"
   listener_arn       = "${module.my-alb.http_listener_arn}"
   priority           = 100
   target_group_arn   = "${module.my-service.target_group_arn}"
