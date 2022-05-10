@@ -2,7 +2,7 @@
 # ECS ami
 #
 
-/* data "aws_ami" "ecs" {
+data "aws_ami" "ecs" {
   most_recent = true
 
   filter {
@@ -16,21 +16,8 @@
   }
 
   owners = ["591542846629"] # AWS
-} */
-data "aws_ami" "ecs" {
-  most_recent = true
-  owners      = ["amazon"]
-
-  filter {
-    name   = "name"
-    values = ["amzn-ami-*-amazon-ecs-optimized"]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
 }
+
 #
 # ECS cluster
 #
@@ -48,10 +35,11 @@ resource "aws_ecs_cluster" "cluster" {
 
 #
 # launchconfig
-#
+# 
 resource "aws_launch_configuration" "cluster" {
   name_prefix          = "ecs-${var.cluster_name}-launchconfig"
-  image_id             = data.aws_ami.ecs.id
+  /* image_id             = data.aws_ami.ecs.id */
+  image_id             =  "ami-0f29c8402f8cce65c"
   instance_type        = var.instance_type
   key_name             = var.ssh_key_name
   iam_instance_profile = aws_iam_instance_profile.cluster-ec2-role.id
