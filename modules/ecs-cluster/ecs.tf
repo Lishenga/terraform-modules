@@ -2,13 +2,12 @@
 # ECS ami
 #
 
-data "aws_ami" "ecs" {
+/* data "aws_ami" "ecs" {
   most_recent = true
 
   filter {
     name   = "name"
-    /* values = ["amzn-ami-*-amazon-ecs-optimized"] */
-    values = ["amzn2-ami-kernel-*"]
+    values = ["amzn-ami-*-amazon-ecs-optimized"]
   }
 
   filter {
@@ -17,8 +16,16 @@ data "aws_ami" "ecs" {
   }
 
   owners = ["591542846629"] # AWS
-}
+} */
+data "aws_ami" "ecs" {
+  most_recent = true
+  owners      = ["amazon"]
 
+  filter {
+    name   = "name"
+    values = ["amzn-ami-*-amazon-ecs-optimized"]
+  }
+}
 #
 # ECS cluster
 #
