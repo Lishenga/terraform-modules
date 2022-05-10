@@ -2,7 +2,7 @@
 # ECS ami
 #
 
-data "aws_ami" "ecs" {
+/* data "aws_ami" "ecs" {
   most_recent = true
 
   filter {
@@ -16,7 +16,7 @@ data "aws_ami" "ecs" {
   }
 
   owners = ["591542846629"] # AWS
-}
+} */
 
 #
 # ECS cluster
