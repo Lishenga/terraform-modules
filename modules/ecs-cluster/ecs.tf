@@ -7,7 +7,8 @@ data "aws_ami" "ecs" {
 
   filter {
     name   = "name"
-    values = ["amzn-ami-*-amazon-ecs-optimized"]
+    /* values = ["amzn-ami-*-amazon-ecs-optimized"] */
+    values = ["amzn2-ami-kernel-5.10-hvm-2.0.20220426.0-x86_64-gp2"]
   }
 
   filter {
