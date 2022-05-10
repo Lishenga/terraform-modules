@@ -25,6 +25,11 @@ data "aws_ami" "ecs" {
     name   = "name"
     values = ["amzn-ami-*-amazon-ecs-optimized"]
   }
+
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
 }
 #
 # ECS cluster
