@@ -16,6 +16,8 @@ variable "cluster_name" {
 variable "instance_type" {
 }
 
+variable "packer_id" {}
+
 variable "ssh_key_name" {
 }
 
