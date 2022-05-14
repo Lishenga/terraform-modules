@@ -38,7 +38,7 @@ resource "aws_ecs_cluster" "cluster" {
 #
 resource "aws_launch_configuration" "cluster" {
   name_prefix          = "ecs-${var.cluster_name}-launchconfig"
-  image_id             = data.aws_ami.ecs.id
+  image_id             = var.packer_id ? var.packer_id : data.aws_ami.ecs.id
   instance_type        = var.instance_type
   key_name             = var.ssh_key_name
   iam_instance_profile = aws_iam_instance_profile.cluster-ec2-role.id
