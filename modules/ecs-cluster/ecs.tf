@@ -6,6 +6,13 @@ data "aws_ami" "ecs" {
   most_recent = true
 
   filter {
+    name = "name"
+    values = ["amzn2-ami-hvm-*-x86_64-ebs"]
+  }
+  owners = ["amazon"]
+  /* most_recent = true
+
+  filter {
     name   = "name"
     values = ["amzn-ami-*-amazon-ecs-optimized"]
   }
@@ -15,7 +22,7 @@ data "aws_ami" "ecs" {
     values = ["hvm"]
   }
 
-  owners = ["591542846629"] # AWS
+  owners = ["591542846629"] # AWS */
 }
 
 #
