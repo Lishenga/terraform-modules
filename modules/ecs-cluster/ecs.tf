@@ -7,7 +7,7 @@ data "aws_ami" "ecs" {
 
   filter {
     name = "name"
-    values = ["amzn2-ami-hvm-*-x86_64-ebs"]
+    values = ["amzn2-ami-minimal-hvm-*-x86_64-ebs"]
   }
   owners = ["amazon"]
   /* most_recent = true
