@@ -16,13 +16,13 @@ data "aws_ami" "ecs" {
     name   = "name"
     values = ["amzn-ami-*-amazon-ecs-optimized"]
   }
-
+ */
   filter {
     name   = "virtualization-type"
     values = ["hvm"]
   }
 
-  owners = ["591542846629"] # AWS */
+  /* owners = ["591542846629"] # AWS */
 }
 
 #
