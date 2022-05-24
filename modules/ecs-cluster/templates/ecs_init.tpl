@@ -3,43 +3,70 @@ echo 'ECS_CLUSTER=${cluster_name}' > /etc/ecs/ecs.config
 start ecs
 sudo su
 # Install Prometheus
-sudo yum install wget
-sudo useradd --no-create-home --shell /bin/false prometheus
-sudo mkdir /etc/prometheus
-sudo mkdir /var/lib/prometheus
-sudo chown prometheus:prometheus /var/lib/prometheus
-cd /tmp/
-wget https://github.com/prometheus/prometheus/releases/download/v2.31.1/prometheus-2.31.1.linux-amd64.tar.gz
-tar -xvf prometheus-2.31.1.linux-amd64.tar.gz
-cd prometheus-2.31.1.linux-amd64
-sudo mv console* /etc/prometheus
-sudo mv prometheus.yml /etc/prometheus
-sudo chown -R prometheus:prometheus /etc/prometheus
-sudo mv prometheus /usr/local/bin/
-sudo chown prometheus:prometheus /usr/local/bin/prometheus
-sudo nano /etc/systemd/system/prometheus.service
-echo "
+# sudo yum install wget
+# sudo useradd --no-create-home --shell /bin/false prometheus
+# sudo mkdir /etc/prometheus
+# sudo mkdir /var/lib/prometheus
+# sudo chown prometheus:prometheus /var/lib/prometheus
+# cd /tmp/
+# wget https://github.com/prometheus/prometheus/releases/download/v2.31.1/prometheus-2.31.1.linux-amd64.tar.gz
+# tar -xvf prometheus-2.31.1.linux-amd64.tar.gz
+# cd prometheus-2.31.1.linux-amd64
+# sudo mv console* /etc/prometheus
+# sudo mv prometheus.yml /etc/prometheus
+# sudo chown -R prometheus:prometheus /etc/prometheus
+# sudo mv prometheus /usr/local/bin/
+# sudo chown prometheus:prometheus /usr/local/bin/prometheus
+# sudo nano /etc/systemd/system/prometheus.service
+# echo "
+# [Unit]
+# Description=Prometheus
+# Wants=network-online.target
+# After=network-online.target
+# [Service]
+# User=prometheus
+# Group=prometheus
+# Type=simple
+# ExecStart=/usr/local/bin/prometheus \
+# --config.file /etc/prometheus/prometheus.yml \
+# --storage.tsdb.path /var/lib/prometheus/ \
+# --web.console.templates=/etc/prometheus/consoles \
+# --web.console.libraries=/etc/prometheus/console_libraries
+# [Install]
+# WantedBy=multi-user.target
+# " > /etc/systemd/system/prometheus.service
+# sudo systemctl daemon-reload
+# sudo systemctl enable prometheus
+# sudo systemctl start prometheus
+# sudo firewall-cmd --add-service=prometheus --permanent
+# sudo firewall-cmd --reload
+
+
+cd /tmp
+curl -LO https://github.com/prometheus/node_exporter/releases/download/v0.18.1/node_exporter-0.18.1.linux-amd64.tar.gz
+tar -xvf node_exporter-0.18.1.linux-amd64.tar.gz
+sudo mv node_exporter-0.18.1.linux-amd64/node_exporter /usr/local/bin/
+sudo useradd -rs /bin/false node_exporter
+sudo echo "
 [Unit]
-Description=Prometheus
-Wants=network-online.target
-After=network-online.target
+Description=Node Exporter
+After=network.target
+
 [Service]
-User=prometheus
-Group=prometheus
+User=node_exporter
+Group=node_exporter
 Type=simple
-ExecStart=/usr/local/bin/prometheus \
---config.file /etc/prometheus/prometheus.yml \
---storage.tsdb.path /var/lib/prometheus/ \
---web.console.templates=/etc/prometheus/consoles \
---web.console.libraries=/etc/prometheus/console_libraries
+ExecStart=/usr/local/bin/node_exporter
+
 [Install]
 WantedBy=multi-user.target
-" > /etc/systemd/system/prometheus.service
+" > /etc/systemd/system/node_exporter.service
 sudo systemctl daemon-reload
-sudo systemctl enable prometheus
-sudo systemctl start prometheus
-sudo firewall-cmd --add-service=prometheus --permanent
-sudo firewall-cmd --reload
+sudo systemctl start node_exporter
+sudo systemctl enable node_exporter
+
+
+
 
 curl -s https://api.github.com/repos/grafana/loki/releases/latest | grep browser_download_url |  cut -d '"' -f 4 | grep loki-linux-amd64.zip | wget -i -
 sudo yum -y install unzip
