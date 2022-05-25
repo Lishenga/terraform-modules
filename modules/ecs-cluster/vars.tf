@@ -30,6 +30,9 @@ variable "ecs_minsize" {
   default = 1
 }
 
+variable "image_id" {
+}
+
 variable "ecs_maxsize" {
   default = 1
 }
