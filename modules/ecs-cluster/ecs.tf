@@ -5,18 +5,18 @@
 data "aws_ami" "ecs" {
   most_recent = true
 
-  filter {
+  /* filter {
     name = "name"
     values = ["amzn2-ami-minimal-hvm-*-x86_64-ebs"]
-  }
+  } */
   owners = ["amazon"]
-  /* most_recent = true
+  /* most_recent = true 
+ */
 
   filter {
     name   = "name"
     values = ["amzn-ami-*-amazon-ecs-optimized"]
   }
- */
   filter {
     name   = "virtualization-type"
     values = ["hvm"]
