@@ -2,6 +2,7 @@
 echo 'ECS_CLUSTER=${cluster_name}' > /etc/ecs/ecs.config
 start ecs
 sudo su
+echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 # Install Prometheus
 # sudo yum install wget
 # sudo useradd --no-create-home --shell /bin/false prometheus
