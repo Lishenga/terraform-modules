@@ -24,11 +24,20 @@ resource "aws_security_group_rule" "cluster-node-exporter" {
   cidr_blocks              = ["0.0.0.0/0"]
 }
 
-resource "aws_security_group_rule" "cluster-node-exporter" {
+resource "aws_security_group_rule" "cluster-loki-promtail" {
   security_group_id        = aws_security_group.cluster.id
   type                     = "ingress"
   from_port                = 3100
   to_port                  = 3100
+  protocol                 = "tcp"
+  cidr_blocks              = ["0.0.0.0/0"]
+}
+
+resource "aws_security_group_rule" "cluster-grafana" {
+  security_group_id        = aws_security_group.cluster.id
+  type                     = "ingress"
+  from_port                = 3000
+  to_port                  = 3000
   protocol                 = "tcp"
   cidr_blocks              = ["0.0.0.0/0"]
 }
