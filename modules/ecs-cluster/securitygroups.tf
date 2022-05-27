@@ -27,8 +27,8 @@ resource "aws_security_group_rule" "cluster-node-exporter" {
 resource "aws_security_group_rule" "cluster-loki-promtail" {
   security_group_id        = aws_security_group.cluster.id
   type                     = "ingress"
-  from_port                = 3100
-  to_port                  = 3100
+  from_port                = 4100
+  to_port                  = 4100
   protocol                 = "tcp"
   cidr_blocks              = ["0.0.0.0/0"]
 }
