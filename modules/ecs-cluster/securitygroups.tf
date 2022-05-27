@@ -27,6 +27,15 @@ resource "aws_security_group_rule" "cluster-node-exporter" {
 resource "aws_security_group_rule" "cluster-node-exporter" {
   security_group_id        = aws_security_group.cluster.id
   type                     = "ingress"
+  from_port                = 3100
+  to_port                  = 3100
+  protocol                 = "tcp"
+  cidr_blocks              = ["0.0.0.0/0"]
+}
+
+resource "aws_security_group_rule" "cluster-node-exporter" {
+  security_group_id        = aws_security_group.cluster.id
+  type                     = "ingress"
   from_port                = 9090
   to_port                  = 9090
   protocol                 = "tcp"
