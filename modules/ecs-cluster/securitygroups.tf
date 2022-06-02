@@ -21,7 +21,6 @@ resource "aws_security_group_rule" "cluster-node-exporter" {
   from_port                = 9100
   to_port                  = 9100
   protocol                 = "tcp"
-  cidr_blocks              = ["0.0.0.0/0"]
 }
 
 resource "aws_security_group_rule" "cluster-loki-promtail" {
@@ -30,7 +29,6 @@ resource "aws_security_group_rule" "cluster-loki-promtail" {
   from_port                = 4100
   to_port                  = 4100
   protocol                 = "tcp"
-  cidr_blocks              = ["0.0.0.0/0"]
 }
 
 resource "aws_security_group_rule" "cluster-grafana" {
@@ -39,7 +37,6 @@ resource "aws_security_group_rule" "cluster-grafana" {
   from_port                = 3000
   to_port                  = 3000
   protocol                 = "tcp"
-  cidr_blocks              = ["0.0.0.0/0"]
 }
 
 resource "aws_security_group_rule" "cluster-prometheus" {
@@ -48,7 +45,6 @@ resource "aws_security_group_rule" "cluster-prometheus" {
   from_port                = 9090
   to_port                  = 9090
   protocol                 = "tcp"
-  cidr_blocks              = ["0.0.0.0/0"]
 }
 
 resource "aws_security_group_rule" "cluster-egress" {
