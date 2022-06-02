@@ -42,7 +42,7 @@ resource "aws_security_group_rule" "cluster-grafana" {
   cidr_blocks              = ["0.0.0.0/0"]
 }
 
-resource "aws_security_group_rule" "cluster-node-exporter" {
+resource "aws_security_group_rule" "cluster-prometheus" {
   security_group_id        = aws_security_group.cluster.id
   type                     = "ingress"
   from_port                = 9090
