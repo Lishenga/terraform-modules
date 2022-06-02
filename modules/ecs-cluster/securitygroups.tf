@@ -8,14 +8,14 @@ resource "aws_security_group_rule" "cluster-allow-ssh" {
   count                    = var.enable_ssh ? 1 : 0
   security_group_id        = aws_security_group.cluster.id
   type                     = "ingress"
-  from_port                = 22
-  to_port                  = 22
+  from_port                = 0
+  to_port                  = 0
   protocol                 = "tcp"
   cidr_blocks              = ["0.0.0.0/0"]
   /* source_security_group_id = var.ssh_sg */
 }
 
-resource "aws_security_group_rule" "cluster-node-exporter" {
+/* resource "aws_security_group_rule" "cluster-node-exporter" {
   security_group_id        = aws_security_group.cluster.id
   type                     = "ingress"
   from_port                = 9100
@@ -47,6 +47,8 @@ resource "aws_security_group_rule" "cluster-prometheus" {
   protocol                 = "tcp"
 }
 
+*/
+
 resource "aws_security_group_rule" "cluster-egress" {
   security_group_id = aws_security_group.cluster.id
   type              = "egress"
@@ -54,7 +56,7 @@ resource "aws_security_group_rule" "cluster-egress" {
   to_port           = 0
   protocol          = "-1"
   cidr_blocks       = ["0.0.0.0/0"]
-}
+} 
 
 /* resource "aws_security_group" "cluster" {
   name        = var.cluster_name
