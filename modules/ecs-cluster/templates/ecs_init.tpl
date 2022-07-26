@@ -176,3 +176,36 @@ WantedBy=multi-user.target
 EOF
 sudo systemctl daemon-reload
 sudo systemctl start promtail.service
+
+
+wget https://github.com/prometheus/blackbox_exporter/releases/download/v0.14.0/blackbox_exporter-0.14.0.linux-amd64.tar.gz
+tar xvzf blackbox_exporter-0.14.0.linux-amd64.tar.gz
+cd blackbox_exporter-0.14.0.linux-amd64
+./blackbox_exporter -h
+sudo mv blackbox_exporter /usr/local/bin
+sudo mkdir -p /etc/blackbox
+sudo mv blackbox.yml /etc/blackbox
+sudo useradd -rs /bin/false blackbox
+sudo chown blackbox:blackbox /usr/local/bin/blackbox_exporter
+sudo chown -R blackbox:blackbox /etc/blackbox/*
+sudo tee /etc/systemd/system/blackbox.service<<EOF
+[Unit]
+Description=Blackbox Exporter Service
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=blackbox
+Group=blackbox
+ExecStart=/usr/local/bin/blackbox_exporter \
+  --config.file=/etc/blackbox/blackbox.yml \
+  --web.listen-address=":9115"
+
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+EOF
+sudo systemctl enable blackbox.service
+sudo systemctl start blackbox.service
