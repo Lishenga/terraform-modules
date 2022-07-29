@@ -21,6 +21,7 @@ resource "aws_security_group_rule" "auth-microservice-port" {
   from_port                = 3010
   to_port                  = 3010
   protocol                 = "tcp"
+  source_security_group_id = var.ssh_sg
 }
 
 resource "aws_security_group_rule" "account-microservice-port" {
@@ -29,6 +30,7 @@ resource "aws_security_group_rule" "account-microservice-port" {
   from_port                = 3011
   to_port                  = 3011
   protocol                 = "tcp"
+  source_security_group_id = var.ssh_sg
 }
 
 resource "aws_security_group_rule" "client-microservice-port" {
@@ -37,6 +39,7 @@ resource "aws_security_group_rule" "client-microservice-port" {
   from_port                = 3001
   to_port                  = 3001
   protocol                 = "tcp"
+  source_security_group_id = var.ssh_sg
 }
 
 resource "aws_security_group_rule" "thing-microservice-port" {
@@ -45,6 +48,7 @@ resource "aws_security_group_rule" "thing-microservice-port" {
   from_port                = 3000
   to_port                  = 3000
   protocol                 = "tcp"
+  source_security_group_id = var.ssh_sg
 }
 
 resource "aws_security_group_rule" "event-microservice-port" {
@@ -53,6 +57,7 @@ resource "aws_security_group_rule" "event-microservice-port" {
   from_port                = 3002
   to_port                  = 3002
   protocol                 = "tcp"
+  source_security_group_id = var.ssh_sg
 }
 
 /*
