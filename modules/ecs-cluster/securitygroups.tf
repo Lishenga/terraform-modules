@@ -15,14 +15,47 @@ resource "aws_security_group_rule" "cluster-allow-ssh" {
   source_security_group_id = var.ssh_sg
 }
 
-/* resource "aws_security_group_rule" "cluster-node-exporter" {
+resource "aws_security_group_rule" "auth-microservice-port" {
   security_group_id        = aws_security_group.cluster.id
   type                     = "ingress"
-  from_port                = 9100
-  to_port                  = 9100
+  from_port                = 3010
+  to_port                  = 3010
   protocol                 = "tcp"
 }
 
+resource "aws_security_group_rule" "account-microservice-port" {
+  security_group_id        = aws_security_group.cluster.id
+  type                     = "ingress"
+  from_port                = 3011
+  to_port                  = 3011
+  protocol                 = "tcp"
+}
+
+resource "aws_security_group_rule" "client-microservice-port" {
+  security_group_id        = aws_security_group.cluster.id
+  type                     = "ingress"
+  from_port                = 3001
+  to_port                  = 3001
+  protocol                 = "tcp"
+}
+
+resource "aws_security_group_rule" "thing-microservice-port" {
+  security_group_id        = aws_security_group.cluster.id
+  type                     = "ingress"
+  from_port                = 3000
+  to_port                  = 3000
+  protocol                 = "tcp"
+}
+
+resource "aws_security_group_rule" "event-microservice-port" {
+  security_group_id        = aws_security_group.cluster.id
+  type                     = "ingress"
+  from_port                = 3002
+  to_port                  = 3002
+  protocol                 = "tcp"
+}
+
+/*
 resource "aws_security_group_rule" "cluster-loki-promtail" {
   security_group_id        = aws_security_group.cluster.id
   type                     = "ingress"
