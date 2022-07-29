@@ -13,13 +13,6 @@ resource "aws_security_group" "ecs-service" {
     }
   }
 
-   ingress {
-    from_port   = 4100
-    to_port     = 4100
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
   egress {
     from_port   = 0
     to_port     = 0
