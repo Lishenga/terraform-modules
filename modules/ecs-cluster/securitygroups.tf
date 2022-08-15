@@ -60,7 +60,7 @@ resource "aws_security_group_rule" "event-microservice-port" {
   source_security_group_id = var.ssh_sg
 }
 
-resource "aws_security_group_rule" "event-microservice-port" {
+resource "aws_security_group_rule" "loki-port" {
   security_group_id        = aws_security_group.cluster.id
   type                     = "ingress"
   from_port                = 3100
