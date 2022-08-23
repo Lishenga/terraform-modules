@@ -60,6 +60,24 @@ resource "aws_security_group_rule" "event-microservice-port" {
   source_security_group_id = var.ssh_sg
 }
 
+resource "aws_security_group_rule" "node-exporter-port" {
+  security_group_id        = aws_security_group.cluster.id
+  type                     = "ingress"
+  from_port                = 9100
+  to_port                  = 9100
+  protocol                 = "tcp"
+  source_security_group_id = var.ssh_sg
+}
+
+resource "aws_security_group_rule" "black-box-port" {
+  security_group_id        = aws_security_group.cluster.id
+  type                     = "ingress"
+  from_port                = 9115
+  to_port                  = 9115
+  protocol                 = "tcp"
+  source_security_group_id = var.ssh_sg
+}
+
 
 resource "aws_security_group_rule" "cluster-loki-promtail" {
   security_group_id        = aws_security_group.cluster.id
@@ -67,25 +85,7 @@ resource "aws_security_group_rule" "cluster-loki-promtail" {
   from_port                = 4100
   to_port                  = 4100
   protocol                 = "tcp"
-  source_security_group_id = var.ssh_sg
-}
-
-resource "aws_security_group_rule" "cluster-grafana" {
-  security_group_id        = aws_security_group.cluster.id
-  type                     = "ingress"
-  from_port                = 3000
-  to_port                  = 3000
-  protocol                 = "tcp"
-  source_security_group_id = var.ssh_sg
-}
-
-resource "aws_security_group_rule" "cluster-prometheus" {
-  security_group_id        = aws_security_group.cluster.id
-  type                     = "ingress"
-  from_port                = 9090
-  to_port                  = 9090
-  protocol                 = "tcp"
-  source_security_group_id = var.ssh_sg
+  cidr_blocks       = ["0.0.0.0/0"]
 }
 
 resource "aws_security_group_rule" "cluster-egress" {
