@@ -50,6 +50,7 @@ module "my-service" {
   launch_type         = "FARGATE"
   security_groups     = [""]
   subnets             = [""]
+  task_definition_arn = "task_definition_arn"
 }
 ```
 

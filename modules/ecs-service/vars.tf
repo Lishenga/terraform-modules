@@ -4,6 +4,9 @@ variable "vpc_id" {
 variable "aws_region" {
 }
 
+variable "task_definition_arn" {
+}
+
 variable "launch_type" {
   default = "EC2"
 }
