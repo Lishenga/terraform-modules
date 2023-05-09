@@ -91,7 +91,7 @@ resource "aws_ecs_service" "ecs-service" {
   cluster = var.cluster_arn
   task_definition = var.task_definition_arn != "" ? var.task_definition_arn : "${aws_ecs_task_definition.ecs-service-taskdef.family}:${max(
     aws_ecs_task_definition.ecs-service-taskdef.revision,
-    ecs_task_definition.ecs-service.revision,
+    data.aws_ecs_task_definition.ecs-service.revision,
   )}"
   iam_role                           = var.launch_type != "FARGATE" ? var.service_role_arn : null
   desired_count                      = var.desired_count
