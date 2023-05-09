@@ -4,9 +4,6 @@ variable "vpc_id" {
 variable "aws_region" {
 }
 
-variable "task_definition_arn" {
-}
-
 variable "launch_type" {
   default = "EC2"
 }
@@ -241,4 +238,10 @@ variable "environment_files" {
 variable "enable_execute_command" {
   type    = bool
   default = false
+}
+
+variable "task_definition_arn" {
+}
+
+variable "aws_iam_role_policy" {
 }

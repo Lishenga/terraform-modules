@@ -86,14 +86,60 @@ resource "aws_ecs_task_definition" "ecs-service-taskdef" {
 #
 # ecs service
 #
-
 resource "aws_ecs_service" "ecs-service" {
+  name    = var.application_name
+  cluster = var.cluster_arn
+  task_definition = var.task_definition_arn ? var.task_definition_arn : "${aws_ecs_task_definition.ecs-service-taskdef.family}:${max(
+    aws_ecs_task_definition.ecs-service-taskdef.revision,
+    ecs_task_definition.ecs-service.revision,
+  )}"
+  iam_role                           = var.launch_type != "FARGATE" ? var.service_role_arn : null
+  desired_count                      = var.desired_count
+  deployment_minimum_healthy_percent = var.deployment_minimum_healthy_percent
+  deployment_maximum_percent         = var.deployment_maximum_percent
+  launch_type                        = var.launch_type
+  platform_version                   = var.launch_type == "FARGATE" ? var.platform_version : null
+  enable_execute_command             = var.enable_execute_command
+
+  # Remove load_balancer block to use custom NGINX load balancer
+
+  dynamic "network_configuration" {
+    for_each = var.launch_type == "FARGATE" ? tolist([var.launch_type]) : []
+    content {
+      security_groups = concat([aws_security_group.ecs-service.id], var.task_security_groups)
+      subnets         = var.fargate_service_subnetids
+    }
+  }
+
+  dynamic "deployment_controller" {
+    for_each = var.deployment_controller == "" ? [] : [1]
+    content {
+      type = var.deployment_controller
+    }
+  }
+
+  dynamic "service_registries" {
+    for_each = var.service_registries
+    content {
+      registry_arn   = service_registries.value.registry_arn
+      container_name = service_registries.value.container_name
+    }
+  }
+
+  depends_on = [var.aws_iam_role_policy]
+}
+
+/* resource "aws_ecs_service" "ecs-service" {
   name    = var.application_name
   cluster = var.cluster_arn
   task_definition = var.task_definition_arn ? var.task_definition_arn : "${aws_ecs_task_definition.ecs-service-taskdef.family}:${max(
     aws_ecs_task_definition.ecs-service-taskdef.revision,
     data.aws_ecs_task_definition.ecs-service.revision,
   )}"
+task_definition = "${aws_ecs_task_definition.ecs-service-taskdef.family}:${max(
+    aws_ecs_task_definition.ecs-service-taskdef.revision,
+    data.aws_ecs_task_definition.ecs-service.revision,
+  )}" 
   iam_role                           = var.launch_type != "FARGATE" ? var.service_role_arn : null
   desired_count                      = var.desired_count
   deployment_minimum_healthy_percent = var.deployment_minimum_healthy_percent
@@ -132,7 +178,7 @@ resource "aws_ecs_service" "ecs-service" {
   }
 
   depends_on = [null_resource.alb_exists]
-}
+} */
 
 
 
