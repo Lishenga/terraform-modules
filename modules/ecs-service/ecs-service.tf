@@ -182,9 +182,9 @@ task_definition = "${aws_ecs_task_definition.ecs-service-taskdef.family}:${max(
 
 
 
-resource "null_resource" "alb_exists" {
+/* resource "null_resource" "alb_exists" {
   triggers = {
     alb_name = var.alb_arn
   }
-}
+} */
 
