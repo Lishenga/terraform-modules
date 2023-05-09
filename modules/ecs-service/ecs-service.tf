@@ -89,7 +89,7 @@ resource "aws_ecs_task_definition" "ecs-service-taskdef" {
 resource "aws_ecs_service" "ecs-service" {
   name    = var.application_name
   cluster = var.cluster_arn
-  task_definition = var.task_definition_arn ? var.task_definition_arn : "${aws_ecs_task_definition.ecs-service-taskdef.family}:${max(
+  task_definition = var.task_definition_arn != "" ? var.task_definition_arn : "${aws_ecs_task_definition.ecs-service-taskdef.family}:${max(
     aws_ecs_task_definition.ecs-service-taskdef.revision,
     ecs_task_definition.ecs-service.revision,
   )}"
