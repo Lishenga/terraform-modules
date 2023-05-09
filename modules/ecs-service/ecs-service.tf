@@ -93,7 +93,7 @@ resource "aws_ecs_service" "ecs-service" {
     aws_ecs_task_definition.ecs-service-taskdef.revision,
     data.aws_ecs_task_definition.ecs-service.revision,
   )}"
-  iam_role                           = var.launch_type != "FARGATE" ? var.service_role_arn : null
+  # iam_role                           = var.launch_type != "FARGATE" ? var.service_role_arn : null
   desired_count                      = var.desired_count
   deployment_minimum_healthy_percent = var.deployment_minimum_healthy_percent
   deployment_maximum_percent         = var.deployment_maximum_percent
