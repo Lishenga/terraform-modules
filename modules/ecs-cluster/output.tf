@@ -10,7 +10,3 @@ output "cluster_sg" {
   value = aws_security_group.cluster.id
 }
 
-output "aws_iam_role_policy" {
-  value = aws_iam_role_policy.cluster-ec2-role.id
-}
-

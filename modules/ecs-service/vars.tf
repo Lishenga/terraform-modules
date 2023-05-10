@@ -90,8 +90,8 @@ variable "execution_role_arn" {
   default = ""
 }
 
-/* variable "alb_arn" {
-} */
+variable "alb_arn" {
+}
 
 variable "fargate_service_security_groups" {
   default = []
@@ -238,11 +238,4 @@ variable "environment_files" {
 variable "enable_execute_command" {
   type    = bool
   default = false
-}
-
-variable "task_definition_arn" {
-  default = ""
-}
-
-variable "aws_iam_role_policy" {
 }
